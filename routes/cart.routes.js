@@ -8,6 +8,9 @@ const router = express.Router();
 // Add item to cart
 router.post('/', addToCart);
 
+console.log("hi");
+
+
 // Remove item from cart
 router.delete('/:cartItemId', removeFromCart);
 
