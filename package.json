@@ -2,7 +2,7 @@
   "name": "horizonbackend",
   "version": "1.0.0",
   "main": "server.js",
-  "type": "module", 
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -17,10 +17,13 @@
   "license": "ISC",
   "description": "Backend server using Express, Sequelize, and MySQL",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
-    "sequelize": "^6.37.4"
+    "sequelize": "^6.37.4",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",
