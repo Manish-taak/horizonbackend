@@ -18,9 +18,9 @@ const generateToken = (user) => {
 export const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const finduser = await db.User.findOne({where:{email:email}});
-    if(finduser){
-      return res.status(200).json({message:"email already exists"})
+    const finduser = await db.User.findOne({ where: { email: email } });
+    if (finduser) {
+      return res.status(200).json({ message: "email already exists" })
     }
     await passwordSchema.validate({ password });
     const salt = await bcrypt.genSalt(10);
@@ -29,7 +29,7 @@ export const createUser = async (req, res) => {
 
     // Generate token
     const token = generateToken(user);
-    
+
     res.status(201).json({ user, token }); // Send user data and token
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -51,7 +51,7 @@ export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await db.User.findByPk(id);
-    
+
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     } else {
@@ -79,7 +79,7 @@ export const updatePassword = async (req, res) => {
     // Compare the old password with the saved hashed password
     const isMatch = await bcrypt.compare(oldpassword, user.password);
 
-    console.log(isMatch,"=========")
+    console.log(isMatch, "=========")
     if (!isMatch) {
       return res.status(401).json({ message: 'Old password is incorrect' });
     }
@@ -99,7 +99,7 @@ export const updatePassword = async (req, res) => {
 
     res.status(200).json({ message: 'Password updated successfully!' });
   } catch (error) {
-    res.status(500).json({ error: error.message,message:"here" });
+    res.status(500).json({ error: error.message, message: "here" });
   }
 };
 
@@ -107,9 +107,11 @@ export const updatePassword = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
+  console.log(email, password)
+
   try {
     // Find user by email
-    const user = await db.User.findOne({ where: { email:email } });
+    const user = await db.User.findOne({ where: { email: email } });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -121,7 +123,7 @@ export const loginUser = async (req, res) => {
     }
     // Generate token
     const token = generateToken(user);
-    res.status(200).json({token, message:"login successfull" }); // Send user data and token
+    res.status(200).json({ token, message: "login successfull" }); // Send user data and token
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
