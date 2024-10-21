@@ -29,7 +29,7 @@ async function testAndSyncModels() {
   try {
     await sequelize.authenticate();
     console.log('Connection to the database has been established successfully.');
-
+   
     // Sync each model individually
     // await db.User.sync({ alter: true }); 
     // console.log('User table synced successfully.');
