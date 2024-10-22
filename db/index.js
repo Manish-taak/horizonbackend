@@ -20,7 +20,7 @@ const db = {
 
 // Initialize models
 
-// db.User = UserModel(sequelize, Sequelize);
+db.User = UserModel(sequelize, Sequelize);
 db.Product = ProductModel(sequelize, Sequelize);
 db.Cart = CartModel(sequelize, Sequelize);
 
@@ -31,8 +31,8 @@ async function testAndSyncModels() {
     // console.log('Connection to the database has been established successfully.');
 
     // Sync each model individually
-    await db.User.sync({ alter: true });
-    console.log('User table synced successfully.');
+    // await db.User.sync({ alter: true });
+    // console.log('User table synced successfully.');
 
     // await db.Product.sync({ alter: true });
     // console.log('Product table synced successfully.');

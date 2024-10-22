@@ -6,7 +6,7 @@ import cartRoutes from "../routes/cart.routes.js"
 const router = express.Router();
 
 // Use specific routes
-router.use('/users', userRoutes);
+router.use('/user', userRoutes);
 router.use('/products', productRoutes);
 router.use('/cart', cartRoutes);
 
