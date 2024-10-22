@@ -1,4 +1,3 @@
-
 import { DataTypes } from 'sequelize';
 
 const CartModel = (sequelize) => {
@@ -30,6 +29,26 @@ const CartModel = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1,
+    },
+    // Single image field
+    singleImage: {
+      type: DataTypes.STRING,  // Store the image path or URL as a string
+      allowNull: true,
+    },
+    // Multiple images field (use JSON type for an array of images)
+    multipleImages: {
+      type: DataTypes.JSON,  // Store array of image paths (if using a DB like PostgreSQL)
+      allowNull: true,
+    },
+    // Single file field
+    singleFile: {
+      type: DataTypes.STRING,  // Store the file path or URL as a string
+      allowNull: true,
+    },
+    // Multiple files field (use JSON type for an array of files)
+    multipleFiles: {
+      type: DataTypes.JSON,  // Store array of file paths (if using PostgreSQL)
+      allowNull: true,
     },
   }, {
     tableName: 'carts',  // Custom table name if necessary

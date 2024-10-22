@@ -8,21 +8,19 @@ import { passwordSchema } from '../validation/validatePassword.js';
 
 // Create User
 export const createUser = async (req, res) => {
+
   try {
 
     // Extract data from the request body
     const { name, email, password } = req.body;
 
-    // Check if a user with the provided email already exists
-    const finduser = await db.User.findOne({ where: { email } });
+    const finduser = await db.User.findOne({ where: { email: email } });
     if (finduser) {
-      return res.status(200).json({ message: "Email already exists" });
+      return res.status(200).json({ message: "email already exists" })
     }
 
-    // Validate the password using the Yup schema
     await passwordSchema.validate({ password });
 
-    // Generate a salt and hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -32,8 +30,7 @@ export const createUser = async (req, res) => {
     // Generate a token for the newly created user
     const token = generateToken(user);
 
-    // Send the user data and the token as a response
-    res.status(201).json({ user, token });
+    res.status(201).json({ user, token }); // Send user data and token
   } catch (error) {
     // Handle any errors that occur
     res.status(400).json({ error: error.message });
@@ -58,10 +55,9 @@ export const getUsers = async (req, res) => {
 // Delete User
 export const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;  // Extract the user ID from the request params
-    const user = await db.User.findOne({ where: { id } });
+    const { id } = req.params;
+    const user = await db.User.findByPk(id);
 
-    // If user not found, return a 404 response
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -89,6 +85,8 @@ export const updatePassword = async (req, res) => {
 
     // Check if the old password matches the stored password
     const isMatch = await bcrypt.compare(oldpassword, user.password);
+
+    console.log(isMatch, "=========")
     if (!isMatch) {
       return res.status(401).json({ message: 'Old password is incorrect' });
     }
@@ -108,7 +106,7 @@ export const updatePassword = async (req, res) => {
 
     res.status(200).json({ message: 'Password updated successfully!' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message, message: "here" });
   }
 };
 
@@ -121,8 +119,8 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Find the user by email
-    const user = await db.User.findOne({ where: { email } });
+    // Find user by email
+    const user = await db.User.findOne({ where: { email: email } });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -135,7 +133,7 @@ export const loginUser = async (req, res) => {
 
     // Generate a token and send it in the response
     const token = generateToken(user);
-    res.status(200).json({ token, message: "Login successful" });
+    res.status(200).json({ token, message: "login successfull" }); // Send user data and token
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

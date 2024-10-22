@@ -1,25 +1,39 @@
 import db from "../db/index.js";
 
-
 const Cart = db.Cart;
 
 // Add item to cart
 export const addToCart = async (req, res) => {
   const { userId, productId, quantity } = req.body;
 
+  // Extract file paths from req.files
+  const singleImage = req.files?.singleImage ? req.files.singleImage[0].path : null;
+  const multipleImages = req.files?.multipleImages ? req.files.multipleImages.map(file => file.path) : [];
+  const singleFile = req.files?.singleFile ? req.files.singleFile[0].path : null;
+  const multipleFiles = req.files?.multipleFiles ? req.files.multipleFiles.map(file => file.path) : [];
+
   try {
     // Check if the item already exists in the cart
     const existingCartItem = await Cart.findOne({ where: { userId, productId } });
 
     if (existingCartItem) {
-      // If item exists, update the quantity
+      // If item exists, update the quantity 
       existingCartItem.quantity += quantity;
       await existingCartItem.save();
       return res.status(200).json({ message: 'Quantity updated', cart: existingCartItem });
     }
 
-    // If item does not exist, create a new cart item
-    const newCartItem = await Cart.create({ userId, productId, quantity });
+    // If item does not exist, create a new cart item with images and files
+    const newCartItem = await Cart.create({
+      userId,
+      productId,
+      quantity,
+      singleImage,
+      multipleImages, // Stored as JSON in your database
+      singleFile,
+      multipleFiles // Stored as JSON in your database
+    });
+
     return res.status(201).json({ message: 'Item added to cart', cart: newCartItem });
   } catch (error) {
     return res.status(500).json({ message: 'Failed to add item to cart', error });
