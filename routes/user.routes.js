@@ -14,6 +14,8 @@ export default router;
 
 
 
+
+
 // user create
 // api : http://localhost:3000/api/users/create
 // data
@@ -87,4 +89,143 @@ export default router;
 // get all user
 // api : http://localhost:3000/api/users/getusers
 // res
-// all user 
+// all user
+
+
+
+
+
+
+
+
+// post user data
+// with the help of fetch
+
+// import React, { useState } from "react";
+
+// const PostUserData = () => {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//   });
+//   const [responseMessage, setResponseMessage] = useState("");
+
+//   // Handle input changes for all form fields
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       [name]: value, // Dynamically set the form data based on input name
+//     }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const response = await fetch("https://api.example.com/users", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(formData),
+//       });
+
+//       if (response.ok) {
+//         const data = await response.json();
+//         setResponseMessage("User created successfully: " + data.id);
+//       } else {
+//         setResponseMessage("Failed to create user");
+//       }
+//     } catch (error) {
+//       setResponseMessage("Error: " + error.message);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1>Post User Data</h1>
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           name="name"
+//           placeholder="Name"
+//           value={formData.name}
+//           onChange={handleChange}
+//         />
+//         <input
+//           type="email"
+//           name="email"
+//           placeholder="Email"
+//           value={formData.email}
+//           onChange={handleChange}
+//         />
+//         <button type="submit">Submit</button>
+//       </form>
+//       <p>{responseMessage}</p>
+//     </div>
+//   );
+// };
+
+// export default PostUserData;
+
+
+// post user data
+// axios
+
+// import React, { useState } from "react";
+// import axios from "axios";
+
+// const PostUserData = () => {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//   });
+//   const [responseMessage, setResponseMessage] = useState("");
+
+//   // Handle input changes for all form fields
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       [name]: value, // Dynamically set the form data based on input name
+//     }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const response = await axios.post("https://api.example.com/users", formData);
+//       setResponseMessage("User created successfully: " + response.data.id);
+//     } catch (error) {
+//       setResponseMessage("Error: " + error.message);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1>Post User Data</h1>
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           name="name"
+//           placeholder="Name"
+//           value={formData.name}
+//           onChange={handleChange}
+//         />
+//         <input
+//           type="email"
+//           name="email"
+//           placeholder="Email"
+//           value={formData.email}
+//           onChange={handleChange}
+//         />
+//         <button type="submit">Submit</button>
+//       </form>
+//       <p>{responseMessage}</p>
+//     </div>
+//   );
+// };
+
+// export default PostUserData;
